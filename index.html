@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JS Typing Speed Test</title>
+    <style>
+        /* Fonts and Typography */
+        body,
+        button,
+        input,
+        select,
+        textarea {
+            font-family: 'Garamond', serif; /* Garamond font */
+            font-size: 18px;
+            line-height: 1.5;
+            background: #f7f7f7; /* Light gray background */
+            color: #333; /* Dark gray text */
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            clear: both;
+        }
+
+        /* Color Scheme */
+        .masthead {
+            padding: 2em 5%; /* Responsive padding */
+            background: #7f31f5; /* New color - Purple */
+            color: #fff; /* White text */
+        }
+
+        .masthead h1 {
+            text-align: center;
+            font-size: 2.5rem; /* Increase size for emphasis */
+            font-weight: 700; /* Bold for impact */
+        }
+
+        .intro {
+            padding: 2em 5%; /* Responsive padding */
+            color: #333; /* Dark gray text */
+            background: #C0C0C0; /* Silver background */
+        }
+
+        /* Backgrounds and Borders */
+        .test-wrapper {
+            border: 10px solid #7f31f5; /* Purple border */
+            border-radius: 20px; /* Rounded corners */
+        }
+
+        /* Animations and Transitions */
+        #reset {
+            padding: .4em 1em;
+            font-size: 0.6em;
+            font-weight: bold;
+            color: #e74c3c; /* Red color */
+            background: #fff; /* White background */
+            border: 3px solid #e74c3c; /* Red border */
+            transition: all 0.3s ease;
+        }
+
+        #reset:hover {
+            color: #fff; /* White text */
+            background-color: #e74c3c; /* Red background */
+            transform: translateY(-3px); /* Move button slightly up on hover */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add shadow */
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .masthead {
+                padding: 2em 2em; /* Adjust padding for smaller screens */
+            }
+            .intro {
+                padding: 2em 2em; /* Adjust padding for smaller screens */
+            }
+        }
+
+        /* Other Styles */
+        p {
+            margin-bottom: 1.5em;
+        }
+
+        b,
+        strong {
+            font-weight: bold;
+        }
+
+        dfn,
+        cite,
+        em,
+        i {
+            font-style: italic;
+        }
+
+        blockquote {
+            margin: 0 1.5em;
+        }
+
+        address {
+            margin: 0 0 1.5em;
+        }
+
+        pre {
+            background: #eee;
+            font-family: "Courier 10 Pitch", Courier, monospace;
+            font-size: 15px;
+            font-size: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 1.6em;
+            max-width: 100%;
+            overflow: auto;
+            padding: 1.6em;
+        }
+
+        code,
+        kbd,
+        tt,
+        var {
+            font: 15px Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+        }
+
+        abbr,
+        acronym {
+            border-bottom: 1px dotted #666;
+            cursor: help;
+        }
+
+        mark,
+        ins {
+            background: #fff9c0;
+            text-decoration: none;
+        }
+
+        sup,
+        sub {
+            font-size: 75%;
+            height: 0;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+        }
+
+        sup {
+            bottom: 1ex;
+        }
+
+        sub {
+            top: .5ex;
+        }
+
+        small {
+            font-size: 75%;
+        }
+
+        big {
+            font-size: 125%;
+        }
+
+        /* Layout */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .intro p,
+        .test-area {
+            margin: 0 auto;
+            max-width: 550px;
+        }
+
+        .test-area {
+            margin-bottom: 4em;
+            padding: 0 2em;
+        }
+
+        #origin-text {
+            margin: 1em 0;
+            padding: 1em 1em 0;
+            background-color: #ededed;
+        }
+
+        #origin-text p {
+            margin: 0;
+            padding-bottom: 1em;
+        }
+
+        .test-wrapper {
+            height: 200%;
+            display: flex;
+        }
+
+        .test-wrapper textarea {
+            flex: 1;
+            color: #333; /* Set text color to dark gray */
+        }
+
+        .meta {
+            margin-top: 1em;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .timer {
+            font-size: 1em;
+            font-weight: bold;
+        }
+
+        .wpm {
+            font-size: 1em;
+            font-weight: bold;
+        }
+
+        .accuracy {
+            font-size: 1em;
+            font-weight: bold;
+        }
+
+        .footer {
+            padding: 10px;
+            background: #f39c12; /* Orange background */
+            color: #fff; /* White text */
+            float: right;
+            text-shadow: 0 0 100px #c0392b; /* Red text shadow */
+            text-decoration: none;
+        }
+
+        .footer a {
+            text-decoration: none;
+            color: #27ae60; /* Green text */
+        }
+
+        .footer a:hover {
+            color: #c0392b; /* Red hover color */
+        }
+
+        .meta section {
+            color: white;
+            border-style:double;
+            border-width:thick;
+            background: #e74c3c; /* Red background */
+        }
+    </style>
+</head>
+
+<body>
+    <header class="masthead">
+        <h1>TYPING SPEED TESTER</h1>
+    </header>
+    <main class="main">
+        <article class="intro">
+            <p><center>Welcome to Typing Speed Tester !!!</center></p>
+        </article><!-- .intro -->
+        <section class="test-area">
+            <div id="origin-text">
+                <p>This is a typing test. Your goal is to duplicate the provided text, EXACTLY, in the field below. The timer starts when you start typing, and only stops when you match this text exactly. Good Luck!
+                    <br>
+                    
+                </p>
+            </div><!-- #origin-text -->
+
+            <div class="test-wrapper">
+                <textarea id="test-area" name="textarea" rows="6" placeholder="Click here to start typing. The clock starts when you start typing."></textarea>
+            </div><!-- .test-wrapper -->
+
+            <div class="meta">
+                <section id="clock">
+                    <div class="timer">00:00:00</div>
+                </section>
+
+                <!-- <section id="Words">
+                    <div class="wordCount">0 Words</div>
+                </section> -->
+
+                <section id="WordsPerMinute">
+                    <div class="wpm">0 WPM</div>
+                </section>
+
+                <section id="Accurate">
+                    <div class="accuracy">100%</div>
+                </section>
+
+                <button id="reset">Start over</button>
+            </div><!-- .meta -->
+        </section><!-- .test-area -->
+    </main>
+
+    <script>
+        const testWrapper = document.querySelector(".test-wrapper");
+        const testArea = document.querySelector("#test-area");
+        var originText = document.querySelector("#origin-text p").innerHTML;
+        const resetButton = document.querySelector("#reset");
+        const theTimer = document.querySelector(".timer");
+        const accuracyLabel = document.querySelector(".accuracy");
+        const wordsPerMinuteLabel = document.querySelector(".wpm");
+
+        var timer = [0,0,0,0];
+        var interval;
+        var wpmInterval;
+        var timerRunning = false;
+        var errors = 0;
+        var timeElapsed = 0;
+        var randomParagraph = 0;
+        var wpm;
+
+        // Add leading zero to numbers 9 or below (purely for aesthetics):
+        function leadingZero(time) {
+            if (time <= 9) {
+                time = "0" + time;
+            }
+            return time;
+        }
+
+        // Run a standard minute/second/hundredths timer:
+        function runTimer() {
+            let currentTime = leadingZero(timer[0]) + ":" + leadingZero(timer[1]) + ":" + leadingZero(timer[2]);
+            theTimer.innerHTML = currentTime;
+            timer[3]++;
+
+            timer[0] = Math.floor((timer[3]/100)/60);
+            timer[1] = Math.floor((timer[3]/100) - (timer[0] * 60));
+            timer[2] = Math.floor(timer[3] - (timer[1] * 100) - (timer[0] * 6000));
+
+            timeElapsed = timer[0]*60 + timer[1];
+        }
+
+        // Finds words per minute
+        function wordsPerMinute() {
+          if (timeElapsed > 0) {
+            var grossWpm = Math.floor((testArea.value.length/5) / (timeElapsed/60));
+            console.log(grossWpm);
+            wpm = Math.floor(((testArea.value.length/5) - errors)/(timeElapsed/60));
+            console.log(wpm);
+            if (wpm < 0) {
+              wordsPerMinuteLabel.innerHTML = 0 + " WPM";
+            } else {
+              wordsPerMinuteLabel.innerHTML = wpm + " WPM";
+            }
+            accuracy(grossWpm);
+          }
+        }
+
+        // Finds the accuracy
+        function accuracy(grossWpm) {
+          let accuracy = Math.floor(wpm/grossWpm*100);
+          if (accuracy < 0) {
+            accuracyLabel.innerHTML = 0+"%";
+          } else {
+            accuracyLabel.innerHTML = accuracy+"%";
+          }
+          console.log(accuracy);
+        }
+
+        // Match the text entered with the provided text on the page:
+        function spellCheck() {
+            let textEntered = testArea.value;
+            let originTextMatch = originText.substring(0,textEntered.length);
+
+
+            if (textEntered == originText) {
+                clearInterval(interval);
+                clearInterval(wpmInterval);
+                testWrapper.style.borderColor = "#429890"; //Green
+            } else {
+                if (textEntered == originTextMatch) {
+                    testWrapper.style.borderColor = "#65CCf3"; //Blue
+                } else {
+                    errors++;
+                    if (!(event.keyCode === 8)) {
+                      testWrapper.style.borderColor = "#E95D0F"; //Orange
+                    } else {
+                      errors--;
+                    }
+                }
+            }
+        }
+
+        // Start the timer:
+        function start() {
+            let textEnteredLength = testArea.value.length;
+            if (textEnteredLength === 0 && !timerRunning) {
+                timerRunning = true;
+                interval = setInterval(runTimer, 10);
+                wpmInterval = setInterval(wordsPerMinute, 1000);
+            }
+        }
+
+        //Generates a new paragraph:
+        function randomParagraphGenerator() {
+            let par1 = "A paralegal is a person trained in legal matters who performs tasks requiring knowledge of the law and legal procedures. A paralegal is not a lawyer but can be employed by a law office or work freelance at a company or law office. Paralegals are not allowed to offer legal services directly to the public on their own and must perform their legal work under an attorney or law firm.";
+            let par2 = "This is a typing test. Your goal is to duplicate the provided text, EXACTLY, in the field below. The timer starts when you start typing, and only stops when you match this text exactly. Good Luck!";
+            let par3 = "Proofreader applicants are tested primarily on their spelling, speed, and skill in finding errors in the sample text. Toward that end, they may be given a list of ten or twenty classically difficult words and a proofreading test, both tightly timed. The proofreading test will often have a maximum number of errors per quantity of text and a minimum amount of time to find them. The goal of this approach is to identify those with the best skill set.";
+            let par4 = "The Master of Business Administration (MBA or M.B.A.) degree originated in the United States in the early 20th century when the country industrialized and companies sought scientific approaches to management. The core courses in an MBA program cover various areas of business such as accounting, applied statistics, business communication, business ethics, business law, finance, managerial economics, management, entrepreneurship, marketing and operations in a manner most relevant to management analysis and strategy. Most programs also include elective courses and concentrations for further study in a particular area, for example accounting, finance, and marketing. MBA programs in the United States typically require completing about sixty credits, nearly twice the number of credits typically required for degrees that cover some of the same material such as the Master of Economics, Master of Finance, Master of Accountancy, Master of Science in Marketing and Master of Science in Management, The MBA is a terminal degree and a professional degree. Accreditation bodies specifically for MBA programs ensure consistency and quality of education. Business schools in many countries offer programs tailored to full-time, part-time, executive (abridged coursework typically occurring on nights or weekends) and distance learning students, many with specialized concentrations.";
+            let par5 = "Words per minute (WPM) is a measure of typing speed, commonly used in recruitment. For the purposes of WPM measurement a word is standardized to five characters or keystrokes. Therefore, 'brown' counts as one word, but 'accounted' counts as two. The benefits of a standardized measurement of input speed are that it enables comparison across language and hardware boundaries. The standardized word 'PARALEGAL' is used to calculate WPM; the word was chosen largely because of its presence in the most widely used English words databases. Other reasons for the choice of 'PARALEGAL' as a standard word include its inclusion in common typing tests and its length.";
+            let par6 = "QWERTY is a keyboard design for Latin-script alphabets. The name comes from the order of the first six keys on the top left letter row of the keyboard (Q W E R T Y). The QWERTY design is based on a layout created for the Sholes and Glidden typewriter and sold to E. Remington and Sons in 1873. It became popular with the success of the Remington No. 2 of 1878, and remains in widespread use.";
+
+            let num = Math.floor(Math.random() * 6) + 1;
+            if (num === 1) {
+                originText = par1;
+            } else if (num === 2) {
+                originText = par2;
+            } else if (num === 3) {
+                originText = par3;
+            } else if (num === 4) {
+                originText = par4;
+            } else if (num === 5) {
+                originText = par5;
+            } else if (num === 6) {
+                originText = par6;
+            }
+
+            document.getElementById("origin-text").innerHTML = "<p>" + originText + "</p>";
+            testArea.value = "";
+        }
+
+        // Reset everything:
+        function reset() {
+            clearInterval(interval);
+            clearInterval(wpmInterval);
+            interval = null;
+            wpmInterval = null;
+            timer = [0,0,0,0];
+            timerRunning = false;
+            testArea.value = "";
+            testWrapper.style.borderColor = "grey";
+            theTimer.innerHTML = "00:00:00";
+            errors = 0;
+            timeElapsed = 0;
+            randomParagraphGenerator();
+        }
+
+        // Event listeners for keyboard input and the reset button:
+        testArea.addEventListener("keypress", start, false);
+        testArea.addEventListener("keyup", spellCheck, false);
+        resetButton.addEventListener("click", reset, false);
+
+        // Load random paragraph when page loads
+        window.onload = randomParagraphGenerator;
+    </script>
+</body>
+
+</html>
